@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   usuario.init(
     {
       nome: DataTypes.STRING,
+      cpf: DataTypes.STRING,
+      telefone: DataTypes.STRING,
     },
     {
       sequelize,

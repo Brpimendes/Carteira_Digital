@@ -9,8 +9,17 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       nome: {
+        allowNull: false,
         type: Sequelize.STRING,
-        require: tur,
+        require: true,
+      },
+      cpf: {
+        allowNull: false,
+        type: Sequelize.STRING,
+        require: true,
+      },
+      telefone: {
+        type: Sequelize.STRING,
       },
     });
   },
