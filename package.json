@@ -19,6 +19,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "nodemon": "^2.0.14"
+    "mysql2": "^2.3.3-rc.0",
+    "nodemon": "^2.0.14",
+    "sequelize": "^6.9.0",
+    "sequelize-cli": "^6.3.0"
   }
 }

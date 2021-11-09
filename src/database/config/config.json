@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "root",
+    "password": "BPMdblm12",
+    "database": "carteiradigital",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
