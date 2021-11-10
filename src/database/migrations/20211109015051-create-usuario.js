@@ -21,6 +21,10 @@ module.exports = {
       telefone: {
         type: Sequelize.STRING,
       },
+      ativo: {
+        default: true,
+        type: Sequelize.BOOLEAN,
+      },
     });
   },
   down: async (queryInterface, Sequelize) => {
