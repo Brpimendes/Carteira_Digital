@@ -9,28 +9,28 @@ exports.getAll = async (req, res) => {
 exports.getById = async (req, res) => {
   const usuario = await userRepositories.getById(req.params.id);
 
-  return res.send(usuario);
+  return res.json(usuario);
 };
 
 exports.salvar = async (req, res) => {
-  const { nome, email } = req.body;
+  const { nome, cpf, telefone } = req.body;
 
-  const usuario = await userRepositories.salvar(nome, email);
+  const usuario = await userRepositories.salvar(nome, cpf, telefone);
 
-  res.send(usuario);
+  res.json(usuario);
 };
 
 exports.atualizar = async (req, res) => {
   const userId = req.params.id;
-  const { nome, email } = req.body;
+  const { nome, telefone } = req.body;
 
-  const usuario = await userRepositories.atualizar(userId, nome, email);
+  const usuario = await userRepositories.atualizar(userId, nome, telefone);
 
-  res.send(usuario);
+  res.json(usuario);
 };
 
 exports.deletar = async (req, res) => {
-  const usuario = await userRepositories.deletar(req.params.id);
+  await userRepositories.deletar(req.params.id);
 
-  res.send(usuario);
+  res.send(`Usuário desativado em nossa base.`);
 };

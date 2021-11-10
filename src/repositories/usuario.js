@@ -1,19 +1,49 @@
+const { usuario } = require("../models");
+
 exports.getAll = () => {
-  return "cheguei aqui";
+  return usuario.findAll();
 };
 
 exports.getById = (id) => {
-  return `Retornando dados do usuario ID = ${id}`;
+  const usuarioEncontrado = usuario.findByPk(id);
+
+  return usuarioEncontrado;
 };
 
-exports.salvar = (nome, email) => {
-  return `Olá ${nome}, seus dados foram salvos em nossa base de dados. Seu dados de acesso é o email ${email}.`;
+exports.salvar = async (nome, cpf, telefone) => {
+  if (!nome || !cpf) {
+    return "O nome e o CPF são obrigatórios!";
+  }
+
+  return usuario.create({
+    nome,
+    cpf,
+    telefone,
+  });
 };
 
-exports.atualizar = (id, nome, email) => {
-  return `Usuário ID ${id}, seus dados foram atualizados, seu nome é ${nome} e seu email é ${email}}.`;
+exports.atualizar = async (id, nome, telefone) => {
+  const usuarioEncontrado = usuario.update(
+    {
+      nome,
+      telefone,
+    },
+    {
+      where: { id },
+    }
+  );
+
+  return usuarioEncontrado;
 };
 
 exports.deletar = (id) => {
-  return `Deletados os dados da nossa base para o usuário ID ${id}.`;
+  const usuarioEncontrado = usuario.update(
+    {
+      ativo: false,
+    },
+    {
+      where: { id },
+    }
+  );
+  return usuarioEncontrado;
 };
