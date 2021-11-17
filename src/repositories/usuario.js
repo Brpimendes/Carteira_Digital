@@ -1,11 +1,15 @@
-const { usuario } = require("../models");
+const { usuario, carteira } = require("../models");
 
 exports.getAll = () => {
-  return usuario.findAll();
+  return usuario.findAll({
+    include: [{ model: carteira }],
+  });
 };
 
 exports.getById = (id) => {
-  const usuarioEncontrado = usuario.findByPk(id);
+  const usuarioEncontrado = usuario.findByPk(id, {
+    include: [{ model: carteira }],
+  });
 
   return usuarioEncontrado;
 };
@@ -19,10 +23,11 @@ exports.salvar = async (nome, cpf, telefone) => {
     nome,
     cpf,
     telefone,
+    ativo: true,
   });
 };
 
-exports.atualizar = async (id, nome, telefone) => {
+exports.atualizar = async (id, nome, telefone, ativo) => {
   const usuarioEncontrado = usuario.update(
     {
       nome,
