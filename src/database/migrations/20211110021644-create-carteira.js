@@ -2,6 +2,9 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable("carteira", {
+      id: {
+        type: Sequelize.INTEGER,
+      },
       conta: {
         allowNull: false,
         autoIncrement: true,
@@ -10,6 +13,13 @@ module.exports = {
       },
       usuario_id: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "usuario",
+          key: "id",
+        },
+        allowNull: false,
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
       },
       agencia: {
         default: "0001",
