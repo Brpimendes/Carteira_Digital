@@ -8,9 +8,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   carteira.init(
     {
-      usuario_id: DataTypes.INTEGER,
-      agencia: DataTypes.STRING,
       conta: DataTypes.INTEGER,
+      agencia: DataTypes.STRING,
       saldo: DataTypes.FLOAT,
     },
     {
@@ -18,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "carteira",
       timestamps: false,
       freezeTableName: true,
+      underscored: true,
     }
   );
   return carteira;
