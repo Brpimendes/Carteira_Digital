@@ -6,6 +6,17 @@ exports.getAll = async (req, res) => {
   res.json(carteiras);
 };
 
+exports.transfSaldo = async (req, res) => {
+  const { contaEnvio, contaDestino, valor } = req.body;
+  const saldoTransferido = await walletRepositories.transfSaldo(
+    contaEnvio,
+    contaDestino,
+    valor
+  );
+
+  res.json(saldoTransferido);
+};
+
 exports.addSaldo = async (req, res) => {
   const conta = req.params.conta;
   const { saldo } = req.body;
