@@ -4,6 +4,7 @@ const walletController = require("../controllers/carteiras");
 const walletRoutes = express.Router();
 
 walletRoutes.get("/", walletController.getAll);
+walletRoutes.post("/", walletController.transfSaldo);
 walletRoutes.put("/:conta", walletController.addSaldo);
 walletRoutes.put("/fazerCompra/:conta", walletController.makeShop);
 
