@@ -1,27 +1,22 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("carteira", {
+    await queryInterface.createTable("extrato", {
       id: {
-        type: Sequelize.INTEGER,
-      },
-      conta: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      agencia: {
-        default: "0001",
+      operacao: {
         type: Sequelize.STRING,
       },
-      saldo: {
-        default: 0.0,
+      valor: {
         type: Sequelize.FLOAT,
       },
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("carteira");
+    await queryInterface.dropTable("extrato");
   },
 };
