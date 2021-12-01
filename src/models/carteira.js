@@ -3,7 +3,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class carteira extends Model {
     static associate(models) {
-      // define association here
+      this.hasOne(models.extrato);
     }
   }
   carteira.init(
@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       conta: DataTypes.INTEGER,
       agencia: DataTypes.STRING,
       saldo: DataTypes.FLOAT,
+      usuario_id: DataTypes.INTEGER,
     },
     {
       sequelize,
