@@ -63,8 +63,6 @@ exports.addSaldo = async (conta, valorRecebido) => {
 
   var saldoUsuario = contaExiste.saldo;
 
-  if (saldoUsuario === 0) return `Adicionar saldo para realizar operações`;
-
   var saldoAtual = (saldoUsuario += valorRecebido);
 
   const saldoAtualizado = await carteira.update(
@@ -86,6 +84,9 @@ exports.makeShop = async (conta, shop) => {
     return `Conta inexistente! Favor informar uma conta válida!`;
 
   var saldoUsuario = contaExiste.saldo;
+
+  if (saldoUsuario == 0)
+    return `Seu saldo é 0, adicionar saldo para fazer compras!`;
 
   if (shop > saldoUsuario) return `Saldo insuficiente para realizar a compra!`;
 
