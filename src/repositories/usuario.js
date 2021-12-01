@@ -1,13 +1,13 @@
 const { usuario, carteira } = require("../models");
 
-exports.getAll = () => {
+exports.getAll = async () => {
   return usuario.findAll({
     include: [{ model: carteira }],
   });
 };
 
-exports.getById = (id) => {
-  const usuarioEncontrado = usuario.findByPk(id, {
+exports.getById = async (id) => {
+  const usuarioEncontrado = await usuario.findByPk(id, {
     include: [{ model: carteira }],
   });
 
@@ -15,19 +15,28 @@ exports.getById = (id) => {
 };
 
 exports.salvar = async (nome, cpf, telefone) => {
-  if (!nome || !cpf) {
-    return "O nome e o CPF são obrigatórios!";
-  }
-
-  return usuario.create({
+  await usuario.create({
     nome,
     cpf,
     telefone,
     ativo: true,
   });
+
+  const usuarioId = await usuario.findOne({
+    attributes: ["id"],
+    where: { cpf },
+  });
+
+  await carteira.create({
+    agencia: "0001",
+    saldo: 0,
+    usuario_id: usuarioId.id,
+  });
+
+  return "usuário criado com sucesso!";
 };
 
-exports.atualizar = async (id, nome, telefone, ativo) => {
+exports.atualizar = async (id, nome, telefone) => {
   const usuarioEncontrado = usuario.update(
     {
       nome,
