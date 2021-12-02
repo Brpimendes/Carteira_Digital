@@ -8,7 +8,7 @@ module.exports = {
         {
           operacao: "DEBITO",
           valor: 15,
-          conta_id: 1,
+          carteira_id: 1,
         },
       ],
       {}
