@@ -1,5 +1,5 @@
 const userRepositories = require("../repositories/usuario");
-const userServices = require("../validators/createUsuario");
+const userServices = require("../services/usuario");
 
 exports.getAll = async (req, res) => {
   const usuarios = await userRepositories.getAll();
@@ -16,7 +16,7 @@ exports.getById = async (req, res) => {
 exports.salvar = async (req, res) => {
   const { nome, cpf, telefone } = req.body;
 
-  const usuario = await userRepositories.salvar(nome, cpf, telefone);
+  const usuario = await userServices.salvar(nome, cpf, telefone);
 
   return res.json(usuario);
 };
@@ -33,5 +33,5 @@ exports.atualizar = async (req, res) => {
 exports.deletar = async (req, res) => {
   await userRepositories.deletar(req.params.id);
 
-  res.send(`Usuário desativado em nossa base.`);
+  res.json(`Usuário desativado em nossa base.`);
 };
