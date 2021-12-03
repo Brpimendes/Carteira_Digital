@@ -8,9 +8,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   extrato.init(
     {
-      conta_id: DataTypes.INTEGER,
       operacao: DataTypes.STRING,
       valor: DataTypes.FLOAT,
+      carteira_id: DataTypes.INTEGER,
     },
     {
       sequelize,
