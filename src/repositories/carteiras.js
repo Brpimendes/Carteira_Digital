@@ -6,31 +6,17 @@ exports.getAll = () => {
   return carteiras;
 };
 
-exports.transfSaldo = async (contaEnvio, contaDestino, valor) => {
-  var contaEnvioExiste = await carteira.findOne({
-    where: { conta: contaEnvio },
-  });
+exports.getByAccount = (conta) => {
+  return carteira.findOne({ where: { conta } });
+};
 
-  if (!contaEnvioExiste) return "Conta de Envio não existe!";
-
-  var contaDestinoExiste = await carteira.findOne({
-    where: { conta: contaDestino },
-  });
-
-  if (!contaDestinoExiste)
-    return "Conta de Destino não localizada! Favor, informar um conta existente";
-
-  var checarSaldo = contaEnvioExiste.saldo;
-
-  if (checarSaldo === 0) return `Adicionar saldo para realizar operações`;
-
-  if (checarSaldo < valor)
-    return `Saldo insuficiente para realizar a tranferencia`;
-
-  var saldoContaEnvio = (contaEnvioExiste.saldo -= valor);
-
-  var saldoContaDestino = (contaDestinoExiste.saldo += valor);
-
+exports.transfSaldo = async (
+  contaEnvio,
+  contaDestino,
+  valor,
+  saldoContaEnvio,
+  saldoContaDestino
+) => {
   await carteira.update(
     {
       saldo: saldoContaEnvio,
@@ -64,18 +50,7 @@ exports.transfSaldo = async (contaEnvio, contaDestino, valor) => {
   return `Transferência realizada com sucesso.`;
 };
 
-exports.addSaldo = async (conta, valorRecebido) => {
-  const contaExiste = await carteira.findOne({ where: { conta } });
-
-  if (!contaExiste) return "Conta inexistente! Informe a conta correta.";
-
-  if (valorRecebido <= 0)
-    return "O valor a ser depositado precisa ser maior que 0(zero).";
-
-  var saldoUsuario = contaExiste.saldo;
-
-  var saldoAtual = (saldoUsuario += valorRecebido);
-
+exports.addSaldo = async (conta, valorRecebido, saldoAtual) => {
   await carteira.update(
     {
       saldo: saldoAtual,
@@ -94,24 +69,10 @@ exports.addSaldo = async (conta, valorRecebido) => {
   return `Saldo Adicionado com Sucesso`;
 };
 
-exports.makeShop = async (conta, shop) => {
-  const contaExiste = await carteira.findOne({ where: { conta } });
-
-  if (!contaExiste)
-    return `Conta inexistente! Favor informar uma conta válida!`;
-
-  var saldoUsuario = contaExiste.saldo;
-
-  if (saldoUsuario == 0)
-    return `Seu saldo é 0, adicionar saldo para fazer compras!`;
-
-  if (shop > saldoUsuario) return `Saldo insuficiente para realizar a compra!`;
-
-  var SaldoAtual = (saldoUsuario -= shop);
-
+exports.makeShop = async (conta, compra, saldoAtual) => {
   await carteira.update(
     {
-      saldo: SaldoAtual,
+      saldo: saldoAtual,
     },
     {
       where: { conta },
@@ -120,7 +81,7 @@ exports.makeShop = async (conta, shop) => {
 
   await extrato.create({
     operacao: "COMPRAS",
-    valor: shop,
+    valor: compra,
     carteira_id: conta,
   });
 

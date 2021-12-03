@@ -1,4 +1,5 @@
 const walletRepositories = require("../repositories/carteiras");
+const walletServices = require("../services/carteira");
 
 exports.getAll = async (req, res) => {
   const carteiras = await walletRepositories.getAll();
@@ -8,7 +9,8 @@ exports.getAll = async (req, res) => {
 
 exports.transfSaldo = async (req, res) => {
   const { contaEnvio, contaDestino, valor } = req.body;
-  const saldoTransferido = await walletRepositories.transfSaldo(
+
+  const saldoTransferido = await walletServices.transfSaldo(
     contaEnvio,
     contaDestino,
     valor
@@ -19,18 +21,18 @@ exports.transfSaldo = async (req, res) => {
 
 exports.addSaldo = async (req, res) => {
   const conta = req.params.conta;
-  const { saldo } = req.body;
+  const { valor } = req.body;
 
-  const saldoCarteira = await walletRepositories.addSaldo(conta, saldo);
+  const saldoCarteira = await walletServices.addSaldo(conta, valor);
 
   res.json(saldoCarteira);
 };
 
 exports.makeShop = async (req, res) => {
   const conta = req.params.conta;
-  const { shop } = req.body;
+  const { compra } = req.body;
 
-  const saldoCarteira = await walletRepositories.makeShop(conta, shop);
+  const saldoCarteira = await walletServices.makeShop(conta, compra);
 
   res.json(saldoCarteira);
 };

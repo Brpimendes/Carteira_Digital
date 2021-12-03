@@ -14,6 +14,10 @@ exports.getById = async (id) => {
   return usuarioEncontrado;
 };
 
+exports.getByCpf = (cpf) => {
+  return usuario.findOne({ where: { cpf } });
+};
+
 exports.salvar = async (nome, cpf, telefone) => {
   await usuario.create({
     nome,
