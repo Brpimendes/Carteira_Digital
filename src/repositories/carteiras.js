@@ -1,10 +1,9 @@
 const { carteira, extrato } = require("../models");
 
 exports.getAll = () => {
-  return carteira.findAll();
-  // return carteira.findAll({
-  //   include: [{ model: extrato }],
-  // });
+  const carteiras = carteira.findAll();
+
+  return carteiras;
 };
 
 exports.transfSaldo = async (contaEnvio, contaDestino, valor) => {
@@ -41,6 +40,12 @@ exports.transfSaldo = async (contaEnvio, contaDestino, valor) => {
     }
   );
 
+  await extrato.create({
+    operacao: "DEBITO",
+    valor,
+    carteira_id: contaEnvio,
+  });
+
   await carteira.update(
     {
       saldo: saldoContaDestino,
@@ -49,6 +54,12 @@ exports.transfSaldo = async (contaEnvio, contaDestino, valor) => {
       where: { conta: contaDestino },
     }
   );
+
+  await extrato.create({
+    operacao: "CREDITO",
+    valor,
+    carteira_id: contaDestino,
+  });
 
   return `Transferência realizada com sucesso.`;
 };
@@ -65,7 +76,7 @@ exports.addSaldo = async (conta, valorRecebido) => {
 
   var saldoAtual = (saldoUsuario += valorRecebido);
 
-  const saldoAtualizado = await carteira.update(
+  await carteira.update(
     {
       saldo: saldoAtual,
     },
@@ -74,7 +85,13 @@ exports.addSaldo = async (conta, valorRecebido) => {
     }
   );
 
-  return saldoAtualizado;
+  await extrato.create({
+    operacao: "CREDITO",
+    valor: valorRecebido,
+    carteira_id: conta,
+  });
+
+  return `Saldo Adicionado com Sucesso`;
 };
 
 exports.makeShop = async (conta, shop) => {
@@ -92,7 +109,7 @@ exports.makeShop = async (conta, shop) => {
 
   var SaldoAtual = (saldoUsuario -= shop);
 
-  const saldoAtualizado = await carteira.update(
+  await carteira.update(
     {
       saldo: SaldoAtual,
     },
@@ -101,5 +118,11 @@ exports.makeShop = async (conta, shop) => {
     }
   );
 
-  return saldoAtualizado;
+  await extrato.create({
+    operacao: "COMPRAS",
+    valor: shop,
+    carteira_id: conta,
+  });
+
+  return `Compra realizada com sucesso.`;
 };
