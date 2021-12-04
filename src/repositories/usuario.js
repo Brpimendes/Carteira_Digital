@@ -4,6 +4,8 @@ exports.getAll = async () => {
   return usuario.findAll({
     include: [{ model: carteira }],
   });
+
+  // return carteira.findAll();
 };
 
 exports.getById = async (id) => {
@@ -32,9 +34,10 @@ exports.salvar = async (nome, cpf, telefone) => {
   });
 
   await carteira.create({
+    id: usuarioId.id,
     agencia: "0001",
     saldo: 0,
-    usuario_id: usuarioId.id,
+    usuarioId: usuarioId.id,
   });
 
   return "usuário criado com sucesso!";
