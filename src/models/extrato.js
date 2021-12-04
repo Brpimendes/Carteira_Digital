@@ -10,7 +10,6 @@ module.exports = (sequelize, DataTypes) => {
     {
       operacao: DataTypes.STRING,
       valor: DataTypes.FLOAT,
-      carteira_id: DataTypes.INTEGER,
     },
     {
       sequelize,

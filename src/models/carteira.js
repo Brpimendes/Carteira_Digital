@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
       conta: DataTypes.INTEGER,
       agencia: DataTypes.STRING,
       saldo: DataTypes.FLOAT,
-      usuario_id: DataTypes.INTEGER,
     },
     {
       sequelize,
