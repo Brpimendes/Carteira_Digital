@@ -29,7 +29,7 @@ exports.transfSaldo = async (
   await extrato.create({
     operacao: "DEBITO",
     valor,
-    carteira_id: contaEnvio,
+    carteiraId: contaEnvio,
   });
 
   await carteira.update(
@@ -44,7 +44,7 @@ exports.transfSaldo = async (
   await extrato.create({
     operacao: "CREDITO",
     valor,
-    carteira_id: contaDestino,
+    carteiraId: contaDestino,
   });
 
   return `Transferência realizada com sucesso.`;
@@ -63,7 +63,7 @@ exports.addSaldo = async (conta, valorRecebido, saldoAtual) => {
   await extrato.create({
     operacao: "CREDITO",
     valor: valorRecebido,
-    carteira_id: conta,
+    carteiraId: conta,
   });
 
   return `Saldo Adicionado com Sucesso`;
@@ -82,7 +82,7 @@ exports.makeShop = async (conta, compra, saldoAtual) => {
   await extrato.create({
     operacao: "COMPRAS",
     valor: compra,
-    carteira_id: conta,
+    carteiraId: conta,
   });
 
   return `Compra realizada com sucesso.`;
