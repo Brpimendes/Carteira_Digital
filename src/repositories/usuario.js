@@ -44,7 +44,7 @@ exports.salvar = async (nome, cpf, telefone) => {
 };
 
 exports.atualizar = async (id, nome, telefone) => {
-  const usuarioEncontrado = usuario.update(
+  usuario.update(
     {
       nome,
       telefone,
@@ -54,11 +54,11 @@ exports.atualizar = async (id, nome, telefone) => {
     }
   );
 
-  return usuarioEncontrado;
+  return `Usuário atualizado com sucesso!`;
 };
 
 exports.deletar = (id) => {
-  const usuarioEncontrado = usuario.update(
+  usuario.update(
     {
       ativo: false,
     },
@@ -66,5 +66,5 @@ exports.deletar = (id) => {
       where: { id },
     }
   );
-  return usuarioEncontrado;
+  return `Usuário desativado de nossa base`;
 };
