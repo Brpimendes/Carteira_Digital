@@ -24,6 +24,7 @@
     "nodemon": "^2.0.14",
     "sequelize": "^6.12.2",
     "sequelize-cli": "^6.3.0",
+    "tunnel-ssh": "^4.1.6",
     "yup": "^0.32.11"
   }
 }
